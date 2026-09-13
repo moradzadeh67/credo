@@ -128,6 +128,6 @@ assets/
 
 MIT License. See [LICENSE](LICENSE) for details.
 
-**Copyright © 2025 Credo**
+**Copyright © 2025 moradzadeh67**
 
 This project is open-source and free to use, modify, and distribute under the MIT License terms.
