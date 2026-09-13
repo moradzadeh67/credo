@@ -19,6 +19,13 @@ Credo is a Flutter-based desktop and mobile application that allows users to:
 - ⚙️ **Settings Management**: Configure your API keys and app preferences
 - 🎨 **Modern UI**: Built with Material Design 3 and responsive layouts
 
+## 🎨 Screenshots
+
+### Home Screen - API Key Management
+![Home Screen](assets/images/credo-preview.png)
+
+> The app provides a clean, intuitive interface for managing your OpenRouter API keys and monitoring account credits in real-time.
+
 ## 🛠️ Tech Stack
 
 - **Flutter & Dart**
@@ -108,14 +115,14 @@ assets/
 
 | Platform | Status | Notes |
 |---|---|---|
-| 🤖 Android | ✅ **Tested** | Production-ready |
-| 🍎 iOS | ✅ **Tested** | Production-ready |
-| 🖥️ macOS | ✅ **Tested** | Production-ready |
-| 🌐 Web | ✅ **Tested** | Production-ready |
+| 🤖 Android | ✅ **Tested** | Working |
+| 🍎 iOS | ✅ **Tested** | Working |
+| 🖥️ macOS | ✅ **Tested** | Working |
+| 🌐 Web | ✅ **Tested** | Working |
 | 🪟 Windows | ⚠️ Untested | Build available, needs testing |
 | 🐧 Linux | ⚠️ Untested | Build available, needs testing |
 
-> **Note**: Android, iOS, macOS, and Web platforms have been fully tested and verified to work correctly. Windows and Linux builds are available but have not been tested yet and should be validated before production use.
+> **Note**: Android, iOS, macOS, and Web platforms have been tested and work correctly. Windows and Linux builds are available but have not been tested yet.
 
 ## 📝 License
 
