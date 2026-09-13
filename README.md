@@ -28,13 +28,13 @@ Credo is a Flutter-based desktop and mobile application that allows users to:
 
 ## 🛠️ Tech Stack
 
-- **Flutter & Dart**
-- **State Management**: Provider (`ChangeNotifier` + `Consumer`)
-- **Secure Storage**: `flutter_secure_storage`
-- **Networking**: `http` (REST API calls to OpenRouter)
-- **URL Launcher**: `url_launcher` (open links)
-- **Date Formatting**: `intl`
-- **App Icons**: `flutter_launcher_icons`
+- **Flutter & Dart** (3.13.2+)
+- **State Management**: [Provider](https://pub.dev/packages/provider) v6.1.1 (`ChangeNotifier` + `Consumer`)
+- **Secure Storage**: [`flutter_secure_storage`](https://pub.dev/packages/flutter_secure_storage) (Platform-native Keychain/Keystore)
+- **Networking**: [`http`](https://pub.dev/packages/http) (REST API calls to OpenRouter)
+- **URL Launcher**: [`url_launcher`](https://pub.dev/packages/url_launcher) (open links)
+- **Date Formatting**: [`intl`](https://pub.dev/packages/intl)
+- **App Icons**: [`flutter_launcher_icons`](https://pub.dev/packages/flutter_launcher_icons)
 
 ## 🚀 How to Run
 
@@ -127,3 +127,7 @@ assets/
 ## 📝 License
 
 MIT License. See [LICENSE](LICENSE) for details.
+
+**Copyright © 2025 Credo**
+
+This project is open-source and free to use, modify, and distribute under the MIT License terms.
