@@ -1,0 +1,50 @@
+<svg width="1600" height="1040" viewBox="0 0 1600 1040" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect width="1600" height="1040" fill="#F4F7F5"/>
+
+  <text x="70" y="92" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#0E2A22">Credo — Logo</text>
+  <text x="70" y="132" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="24" font-weight="500" fill="#6B8379">OpenRouter Credits monitor</text>
+
+  <!-- App icon on light card -->
+  <rect x="70" y="180" width="420" height="420" rx="28" fill="#FFFFFF" stroke="#E2EAE5" stroke-width="2"/>
+  <image x="110" y="220" width="340" height="340" xlink:href="credo-icon.svg"/>
+  <text x="280" y="640" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="24" fill="#4B8A6E">App Icon — on light</text>
+
+  <!-- App icon on dark card -->
+  <rect x="530" y="180" width="420" height="420" rx="28" fill="#0C1F19"/>
+  <image x="570" y="220" width="340" height="340" xlink:href="credo-icon.svg"/>
+  <text x="740" y="640" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="24" fill="#4B8A6E">App Icon — on dark</text>
+
+  <!-- Size ramp -->
+  <rect x="990" y="180" width="540" height="420" rx="28" fill="#FFFFFF" stroke="#E2EAE5" stroke-width="2"/>
+  <text x="1024" y="228" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#0E2A22">Scalability</text>
+  <image x="1024" y="300" width="256" height="256" xlink:href="credo-icon.svg"/>
+  <image x="1310" y="300" width="128" height="128" xlink:href="credo-icon.svg"/>
+  <image x="1310" y="444" width="64" height="64" xlink:href="credo-icon.svg"/>
+  <image x="1400" y="444" width="48" height="48" xlink:href="credo-icon.svg"/>
+  <image x="1470" y="452" width="32" height="32" xlink:href="credo-icon.svg"/>
+  <image x="1400" y="510" width="24" height="24" xlink:href="credo-icon.svg"/>
+  <image x="1444" y="510" width="16" height="16" xlink:href="credo-icon.svg"/>
+
+  <!-- Menubar mock (light) -->
+  <text x="70" y="720" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#0E2A22">macOS menu bar (template icon)</text>
+  <rect x="70" y="744" width="1000" height="52" rx="12" fill="#E9ECEB"/>
+  <text x="96" y="778" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#222">Credo</text>
+  <image x="892" y="758" width="24" height="24" xlink:href="credo-mark-mono.svg"/>
+  <text x="930" y="778" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" fill="#222">$25.77</text>
+  <text x="1036" y="778" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" fill="#222">Sat 12:30</text>
+
+  <!-- Menubar mock (dark) -->
+  <rect x="70" y="824" width="1000" height="52" rx="12" fill="#1C1C1E"/>
+  <text x="96" y="858" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#F2F2F2">Credo</text>
+  <g transform="translate(892,834)">
+    <image width="24" height="24" xlink:href="credo-mark-white.svg"/>
+  </g>
+  <text x="930" y="858" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" fill="#F2F2F2">$25.77</text>
+  <text x="1036" y="858" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" fill="#F2F2F2">Sat 12:30</text>
+
+  <!-- Horizontal lockup -->
+  <rect x="70" y="912" width="1460" height="100" rx="16" fill="#FFFFFF" stroke="#E2EAE5" stroke-width="2"/>
+  <image x="96" y="926" width="72" height="72" xlink:href="credo-icon.svg"/>
+  <text x="192" y="978" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="42" font-weight="700" fill="#0E2A22">Credo</text>
+  <text x="330" y="976" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#4B8A6E" letter-spacing="3">OPENROUTER CREDITS</text>
+</svg>

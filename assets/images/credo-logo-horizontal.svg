@@ -1,0 +1,20 @@
+<svg width="1900" height="620" viewBox="0 0 1900 620" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cg2" x1="0.15" y1="1" x2="0.85" y2="0">
+      <stop offset="0%" stop-color="#1E9E58"/>
+      <stop offset="45%" stop-color="#54E38A"/>
+      <stop offset="80%" stop-color="#B6F86B"/>
+      <stop offset="100%" stop-color="#7FBF3A"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="40" y="40" width="540" height="540" rx="150" fill="#0B2019"/>
+  <path d="M 409.3 440.2 A 170 170 0 1 1 409.3 179.8"
+        fill="none" stroke="url(#cg2)" stroke-width="82" stroke-linecap="round"/>
+  <circle cx="409.3" cy="179.8" r="38" fill="#EAFF9B"/>
+
+  <text x="650" y="400" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="270" font-weight="700" fill="#0E2A22" letter-spacing="-4">Credo</text>
+  <text x="654" y="478" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="70" font-weight="500" fill="#4B8A6E" letter-spacing="10">OPENROUTER CREDITS</text>
+</svg>

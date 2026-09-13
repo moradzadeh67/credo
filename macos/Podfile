@@ -1,0 +1,101 @@
+platform :osx, '12.0'
+
+# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
+def flutter_root
+  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'ephemeral', 'Flutter-Generated.xcconfig'), __FILE__)
+  unless File.exist?(generated_xcode_build_settings_path)
+    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure \"flutter pub get\" is executed first"
+  end
+
+  File.foreach(generated_xcode_build_settings_path) do |line|
+    matches = line.match(/FLUTTER_ROOT\=(.*)/)
+    return matches[1].strip if matches
+  end
+  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Flutter-Generated.xcconfig, then run \"flutter pub get\""
+end
+
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+flutter_macos_podfile_setup
+
+target 'Runner' do
+  use_frameworks!
+
+  flutter_install_all_macos_pods File.dirname(File.realpath(__FILE__))
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
+
+post_install do |installer|
+  sdk_root = flutter_root
+  fw_dir = "#{sdk_root}/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.xcframework/macos-arm64_x86_64"
+
+  # Disable Xcode 26 explicit modules: Flutter plugins (e.g. those importing
+  # `FlutterMacOS`) fail with "unable to resolve module dependency" otherwise.
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['SWIFT_ENABLE_EXPLICIT_MODULES'] = 'NO'
+    config.build_settings['CLANG_ENABLE_EXPLICIT_MODULES'] = 'NO'
+  end
+
+  installer.pods_project.targets.each do |target|
+    flutter_additional_macos_build_settings(target)
+    target.build_configurations.each do |config|
+      # Make the FlutterMacOS framework resolvable for plugin targets.
+      config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= '$(inherited)'
+      config.build_settings['FRAMEWORK_SEARCH_PATHS'] << " \"#{fw_dir}\""
+
+      # Xcode 26 explicit-modules workaround.
+      config.build_settings['SWIFT_ENABLE_EXPLICIT_MODULES'] = 'NO'
+      config.build_settings['CLANG_ENABLE_EXPLICIT_MODULES'] = 'NO'
+    end
+  end
+
+  # The project lives inside an iCloud/FileProvider-synced folder. The sync
+  # keeps re-applying `com.apple.FinderInfo` to the built .app bundle, which
+  # makes Xcode's own CodeSign step fail with "... detritus not allowed".
+  # Workaround: let Xcode skip signing and ad-hoc sign the app ourselves right
+  # after stripping the extended attributes (retrying to win the race against
+  # the file provider).
+  require 'xcodeproj'
+  project_path = File.join(__dir__, 'Runner.xcodeproj')
+  if File.exist?(project_path)
+    project = Xcodeproj::Project.open(project_path)
+    runner = project.targets.find { |t| t.name == 'Runner' }
+    if runner
+      runner.build_configurations.each do |config|
+        config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+        config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        config.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
+      end
+
+      phase_name = 'Clear Extended Attributes'
+      existing = runner.shell_script_build_phases.find { |p| p.name == phase_name }
+      runner.build_phases.delete(existing) if existing
+
+      phase = runner.new_shell_script_build_phase(phase_name)
+      phase.shell_script = <<~'SH'
+        APP="${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}"
+        for i in 1 2 3 4 5 6 7 8 9 10; do
+          /usr/bin/xattr -cr "$APP" 2>/dev/null
+          if /usr/bin/codesign --force --deep --sign - "$APP" >/dev/null 2>&1; then
+            break
+          fi
+          sleep 0.3
+        done
+      SH
+
+      runner.build_phases.delete(phase)
+      runner.build_phases << phase
+      project.save
+    end
+  end
+end
