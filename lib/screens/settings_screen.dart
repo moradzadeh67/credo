@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../models/key_type.dart';
 import '../providers/app_provider.dart';
 import '../utils/api_key_mask.dart';
+import '../utils/export_helper.dart';
 import '../utils/url_helper.dart';
 import 'key_setup_screen.dart';
 
@@ -79,14 +81,73 @@ class SettingsScreen extends StatelessWidget {
             leading: const Icon(Icons.logout, color: Colors.red),
             title: const Text('Logout & Delete Key', style: TextStyle(color: Colors.red)),
             onTap: () async {
+              final confirmed = await showDialog<bool>(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text('Logout?'),
+                  content: const Text('Your API key will be deleted from this device.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx, false),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx, true),
+                      child: const Text('Delete', style: TextStyle(color: Colors.red)),
+                    ),
+                  ],
+                ),
+              );
+              if (confirmed != true) return;
               await provider.logout();
               if (context.mounted) {
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                if (provider.isKeySaved) return;
                 Navigator.of(context)
                     .pushReplacement(MaterialPageRoute(builder: (_) => const KeySetupScreen()));
               }
             },
+          ),
+          const Divider(),
+          _SectionHeader('Data'),
+          ListTile(
+            leading: const Icon(Icons.copy_all),
+            title: const Text('Copy Usage as JSON'),
+            subtitle: const Text('Copy the current credits and usage'),
+            onTap: () {
+              final json = ExportHelper.toJson(
+                keyInfo: provider.keyInfo,
+                creditsInfo: provider.creditsInfo,
+              );
+              Clipboard.setData(ClipboardData(text: json));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Copied JSON to clipboard')));
+            },
+          ),
+          const Divider(),
+          _SectionHeader('Appearance'),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            child: SegmentedButton<ThemeMode>(
+              segments: const [
+                ButtonSegment<ThemeMode>(
+                  value: ThemeMode.system,
+                  label: Text('System'),
+                  icon: Icon(Icons.brightness_auto),
+                ),
+                ButtonSegment<ThemeMode>(
+                  value: ThemeMode.light,
+                  label: Text('Light'),
+                  icon: Icon(Icons.light_mode),
+                ),
+                ButtonSegment<ThemeMode>(
+                  value: ThemeMode.dark,
+                  label: Text('Dark'),
+                  icon: Icon(Icons.dark_mode),
+                ),
+              ],
+              selected: {provider.themeMode},
+              onSelectionChanged: (selection) => provider.setThemeMode(selection.first),
+            ),
           ),
           const Divider(),
           _SectionHeader('About'),

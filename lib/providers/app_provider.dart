@@ -18,6 +18,7 @@ class AppProvider extends ChangeNotifier {
   String? _errorMessage;
   bool _isKeySaved = false;
   DateTime? _lastUpdated;
+  ThemeMode _themeMode = ThemeMode.system;
 
   KeyInfo? get keyInfo => _keyInfo;
   CreditsInfo? get creditsInfo => _creditsInfo;
@@ -27,6 +28,7 @@ class AppProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   bool get isKeySaved => _isKeySaved;
   DateTime? get lastUpdated => _lastUpdated;
+  ThemeMode get themeMode => _themeMode;
   SecureStorageService get storageService => _storageService;
 
   /// True when we have a key but could not read the account balance.
@@ -37,12 +39,29 @@ class AppProvider extends ChangeNotifier {
       ? 'Could not read the account balance. Check your Management key permissions.'
       : 'Add a Management Key in Settings to see your account balance.';
 
+  /// Estimated number of days until the credits run out, based on the current
+  /// daily usage. Returns null when an estimate is not possible.
+  int? get estimatedDaysLeft {
+    final CreditsInfo? credits = _creditsInfo;
+    final KeyInfo? key = _keyInfo;
+    if (credits == null || key == null) return null;
+    final double daily = key.usageDaily;
+    if (daily <= 0) return null;
+    return (credits.remaining / daily).floor();
+  }
+
   AppProvider() {
     _checkInitialState();
   }
 
   Future<void> _checkInitialState() async {
     _keyType = await _storageService.getKeyType();
+    final storedTheme = await _storageService.getThemeMode();
+    _themeMode = switch (storedTheme) {
+      'light' => ThemeMode.light,
+      'dark' => ThemeMode.dark,
+      _ => ThemeMode.system,
+    };
     _isKeySaved = await _storageService.hasApiKey();
     if (_isKeySaved) {
       // Auto-fetch data if a key was previously saved.
@@ -107,6 +126,17 @@ class AppProvider extends ChangeNotifier {
     await _storageService.saveKeyType(type);
     notifyListeners();
     await refreshData();
+  }
+
+  /// Updates the preferred theme mode and persists it.
+  ///
+  /// The choice is stored independently of the API key, so it is kept
+  /// after logout.
+  Future<void> setThemeMode(ThemeMode mode) async {
+    if (_themeMode == mode) return;
+    _themeMode = mode;
+    await _storageService.saveThemeMode(mode.name);
+    notifyListeners();
   }
 
   /// Fetches the latest key info and credit balance using the saved key.

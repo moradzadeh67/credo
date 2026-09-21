@@ -17,6 +17,7 @@ class SecureStorageService {
 
   static const String _keyApiKey = 'openrouter_api_key';
   static const String _keyKeyType = 'openrouter_key_type';
+  static const String _keyThemeMode = 'theme_mode';
 
   /// Saves the API key securely.
   Future<void> saveApiKey(String apiKey) async {
@@ -37,6 +38,17 @@ class SecureStorageService {
   Future<KeyType> getKeyType() async {
     final value = await _storage.read(key: _keyKeyType);
     return KeyType.fromStorage(value);
+  }
+
+  /// Saves the preferred theme mode ('system', 'light' or 'dark').
+  /// It is intentionally independent of the API key and survives logout.
+  Future<void> saveThemeMode(String mode) async {
+    await _storage.write(key: _keyThemeMode, value: mode);
+  }
+
+  /// Reads the stored theme mode, or null when it was never set.
+  Future<String?> getThemeMode() async {
+    return await _storage.read(key: _keyThemeMode);
   }
 
   /// Deletes the API key (and its stored type) from storage.

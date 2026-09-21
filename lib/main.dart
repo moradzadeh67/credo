@@ -19,6 +19,9 @@ class CredoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // CredoApp is a child of MultiProvider, so it can watch the provider.
+    final themeMode = context.watch<AppProvider>().themeMode;
+
     return MaterialApp(
       title: 'Credo',
       debugShowCheckedModeBanner: false,
@@ -30,6 +33,15 @@ class CredoApp extends StatelessWidget {
         useMaterial3: true,
         appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
       ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF22C55E),
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
+      ),
+      themeMode: themeMode,
       home: const _AppRoot(),
     );
   }
