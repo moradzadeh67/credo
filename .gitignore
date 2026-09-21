@@ -34,6 +34,7 @@ migrate_working_dir/
 /coverage/
 macos/Pods/
 macos/Podfile.lock
+ios/Podfile.lock
 android/app/build/
 
 # Symbolication related
