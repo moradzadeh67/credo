@@ -73,7 +73,21 @@ Every technical choice in Credo was made with simplicity, maintainability, and s
 
 ## 🏗️ Architecture
 
-Credo follows a clean layered architecture using the Provider pattern:
+Credo follows a clean layered architecture using the Provider pattern.
+
+### Project Structure
+
+![Project Structure](assets/diagrams/project-structure.png)
+
+### Architecture Layers
+
+![Architecture Layers](assets/diagrams/architecture-layers.png)
+
+### Data Flow
+
+![Data Flow Diagram](assets/diagrams/data-flow-diagram.png)
+
+### Layer Overview
 
 ```
 lib/
@@ -84,6 +98,15 @@ lib/
 ├── theme/      → Centralized theme (AppTheme — colors, elevation, typography)
 └── utils/      → Pure helper functions (mask, url, export)
 ```
+
+### Data Flow Summary
+
+1. **Entry** — `main.dart` calls `runApp()`
+2. **UI Layer** — `screens/` builds widgets
+3. **State Layer** — `providers/` manages app state (Provider pattern)
+4. **Services** — `services/` handles API calls and secure storage
+5. **Models** — `models/` represents typed data
+6. **Update Cycle** — State changes trigger `notifyListeners()` → UI rebuilds
 
 ## 📱 Platform Support
 
