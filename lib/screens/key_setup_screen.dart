@@ -5,6 +5,7 @@ import '../models/credits_info.dart';
 import '../models/key_info.dart';
 import '../models/key_type.dart';
 import '../providers/app_provider.dart';
+import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
 class KeySetupScreen extends StatefulWidget {
@@ -54,6 +55,7 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<AppProvider>();
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Setup OpenRouter')),
@@ -68,13 +70,15 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Enter your OpenRouter API key to start monitoring your usage and credits.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+              ),
             ),
             const SizedBox(height: 32),
-            _buildTypeSelector(),
+            _buildTypeSelector(context),
             const SizedBox(height: 20),
             TextField(
               controller: _keyController,
@@ -119,7 +123,7 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
             ],
             if (provider.keyInfo != null || provider.creditsInfo != null) ...[
               const SizedBox(height: 24),
-              _buildResultCard(provider.keyInfo, provider.creditsInfo),
+              _buildResultCard(context, provider.keyInfo, provider.creditsInfo),
             ],
             if (provider.isKeySaved) ...[
               const SizedBox(height: 24),
@@ -137,7 +141,9 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
     );
   }
 
-  Widget _buildTypeSelector() {
+  Widget _buildTypeSelector(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -163,7 +169,10 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
         const SizedBox(height: 8),
         Text(
           _selectedType.description,
-          style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+          style: TextStyle(
+            fontSize: 12,
+            color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+          ),
         ),
       ],
     );
@@ -191,7 +200,7 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
     );
   }
 
-  Widget _buildResultCard(KeyInfo? info, CreditsInfo? credits) {
+  Widget _buildResultCard(BuildContext context, KeyInfo? info, CreditsInfo? credits) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -206,20 +215,29 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
             ),
             const Divider(height: 24),
             if (credits != null) ...[
-              _buildInfoRow('Account Balance', '\$${credits.remaining.toStringAsFixed(2)}'),
-              _buildInfoRow('Total Purchased', '\$${credits.totalCredits.toStringAsFixed(2)}'),
+              _buildInfoRow(
+                context,
+                'Account Balance',
+                '\$${credits.remaining.toStringAsFixed(2)}',
+              ),
+              _buildInfoRow(
+                context,
+                'Total Purchased',
+                '\$${credits.totalCredits.toStringAsFixed(2)}',
+              ),
               const Divider(height: 24),
             ],
             if (info != null) ...[
-              _buildInfoRow('Label', info.label),
+              _buildInfoRow(context, 'Label', info.label),
               _buildInfoRow(
+                context,
                 'Limit',
                 info.isUnlimited ? 'Unlimited' : '\$${info.limit?.toStringAsFixed(2)}',
               ),
               if (info.hasLimit)
-                _buildInfoRow('Remaining', '\$${info.limitRemaining?.toStringAsFixed(2)}'),
-              _buildInfoRow('Usage (Total)', '\$${info.usage.toStringAsFixed(4)}'),
-              _buildInfoRow('Usage (Daily)', '\$${info.usageDaily.toStringAsFixed(4)}'),
+                _buildInfoRow(context, 'Remaining', '\$${info.limitRemaining?.toStringAsFixed(2)}'),
+              _buildInfoRow(context, 'Usage (Total)', '\$${info.usage.toStringAsFixed(4)}'),
+              _buildInfoRow(context, 'Usage (Daily)', '\$${info.usageDaily.toStringAsFixed(4)}'),
             ],
           ],
         ),
@@ -227,13 +245,20 @@ class _KeySetupScreenState extends State<KeySetupScreen> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(BuildContext context, String label, String value) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey)),
+          Text(
+            label,
+            style: TextStyle(
+              color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+            ),
+          ),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
       ),

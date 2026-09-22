@@ -7,6 +7,7 @@ import '../models/credits_info.dart';
 import '../models/key_info.dart';
 import '../models/key_type.dart';
 import '../providers/app_provider.dart';
+import '../theme/app_theme.dart';
 import '../utils/url_helper.dart';
 import 'settings_screen.dart';
 
@@ -53,6 +54,8 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, AppProvider provider) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (provider.isInitialLoading) {
       return Container(
         alignment: Alignment.center,
@@ -86,16 +89,18 @@ class HomeScreen extends StatelessWidget {
         if (provider.lastUpdated != null)
           Text(
             'Last updated: ${_timeAgo(provider.lastUpdated!)}',
-            style: const TextStyle(color: Colors.grey),
+            style: TextStyle(
+              color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+            ),
             textAlign: TextAlign.center,
           ),
         const SizedBox(height: 24),
         ?_buildLowBalanceBanner(provider),
         _buildMainCard(context, provider),
         const SizedBox(height: 24),
-        if (provider.keyInfo != null) _buildUsageCards(provider.keyInfo!),
+        if (provider.keyInfo != null) _buildUsageCards(context, provider.keyInfo!),
         const SizedBox(height: 24),
-        _buildRefreshHint(),
+        _buildRefreshHint(context),
       ],
     );
   }
@@ -103,6 +108,8 @@ class HomeScreen extends StatelessWidget {
   Widget _buildMainCard(BuildContext context, AppProvider provider) {
     final CreditsInfo? credits = provider.creditsInfo;
     final KeyInfo? keyInfo = provider.keyInfo;
+
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Prefer the real account balance when available.
     final String amountText;
@@ -127,13 +134,20 @@ class HomeScreen extends StatelessWidget {
     final Color amountColor = _balanceColor(progress);
 
     return Card(
-      elevation: 6,
+      elevation: 4,
+      shadowColor: Colors.black.withValues(alpha: 0.15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(28.0),
         child: Column(
           children: [
-            const Text('Available Credits', style: TextStyle(fontSize: 18, color: Colors.grey)),
+            Text(
+              'Available Credits',
+              style: TextStyle(
+                fontSize: 18,
+                color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+              ),
+            ),
             const SizedBox(height: 8),
             InkWell(
               onTap: () => _copyToClipboard(context, amountText),
@@ -158,7 +172,9 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 '${(progress * 100).toStringAsFixed(1)}% remaining',
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(
+                  color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+                ),
               ),
             ],
             if (caption != null) ...[
@@ -166,14 +182,20 @@ class HomeScreen extends StatelessWidget {
               Text(
                 caption,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+                ),
               ),
             ],
             if (provider.estimatedDaysLeft != null) ...[
               const SizedBox(height: 8),
               Text(
                 '≈ ${provider.estimatedDaysLeft} days left at current rate',
-                style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+                ),
               ),
             ],
             if (provider.creditsUnavailable && provider.keyType != KeyType.management) ...[
@@ -199,7 +221,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildUsageCards(KeyInfo info) {
+  Widget _buildUsageCards(BuildContext context, KeyInfo info) {
     // Only show a progress bar when a per-key limit is configured.
     final double? limit = (info.hasLimit && info.limit! > 0) ? info.limit : null;
     final cards = [
@@ -219,6 +241,7 @@ class HomeScreen extends StatelessWidget {
           children: cards.map((card) {
             final double value = card['value'] as double;
             return _buildUsageCard(
+              context,
               card['label'] as String,
               value,
               progress: limit == null ? null : (value / limit).clamp(0.0, 1.0),
@@ -229,16 +252,24 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildUsageCard(String label, double value, {double? progress}) {
+  Widget _buildUsageCard(BuildContext context, String label, double value, {double? progress}) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SizedBox(
       width: 140,
       child: Card(
-        elevation: 3,
+        elevation: 2,
+        shadowColor: Colors.black.withValues(alpha: 0.12),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text(label, style: const TextStyle(color: Colors.grey)),
+              Text(
+                label,
+                style: TextStyle(
+                  color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+                ),
+              ),
               const SizedBox(height: 8),
               Text(
                 _formatAmount(value),
@@ -320,9 +351,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRefreshHint() {
-    return const Center(
-      child: Text('Pull down to refresh', style: TextStyle(color: Colors.grey)),
+  Widget _buildRefreshHint(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    return Center(
+      child: Text(
+        'Pull down to refresh',
+        style: TextStyle(color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary),
+      ),
     );
   }
 }
