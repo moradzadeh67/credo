@@ -1,157 +1,126 @@
-# 🔑 Credo
+# Credo
 
-![Credo Logo](assets/images/credo-icon-256.png)
+Credo is a lightweight, open-source Flutter app for managing OpenRouter API keys and monitoring your credit balance — securely and in real time. Built with Material Design 3 and platform-native secure storage. Available on Android, iOS, macOS, and Web.
 
-A professional Flutter application for managing OpenRouter API keys and checking account credits.
+## 💡 Why I Built This
 
-## 📌 Project Overview
+As a developer frequently building with LLMs via OpenRouter, I found myself constantly navigating to the web dashboard just to check my remaining credits and monitor usage limits. I wanted a fast, lightweight, and secure tool that lived on my desktop and mobile devices without requiring third-party servers or exposing my API keys. Since I couldn't find a focused, privacy-first utility that fit my workflow, I decided to build Credo.
 
-Credo is a Flutter-based desktop and mobile app that keeps an eye on your OpenRouter
-account. It stores your API keys in the platform's native secure storage, reads your
-credit balance and usage from the OpenRouter REST API, and presents everything in a
-clean Material 3 interface — with handy extras like a low-balance alert, a burn-rate
-estimate, and a one-tap JSON export.
+> ℹ️ **Screenshots**: App screenshots are currently being prepared and will be added to `assets/screenshots/`.
 
 ## ✨ Features
 
-Here is what the app can do, in plain terms:
+- 🔐 **Secure API Key Storage** — Keys are encrypted in system-native storage (Keychain on iOS/macOS, Keystore on Android).
+- 💳 **Real-Time Credit Monitoring** — Instant overview of remaining credits and total account balance.
+- 📊 **Usage Tracking** — Detailed breakdowns for daily, weekly, monthly, and total API usage.
+- 📈 **Burn Rate Estimation** — Smart calculation showing estimated days remaining based on current usage velocity.
+- 🔔 **Low-Balance Alerts** — Visual warning banners when credit drops below custom threshold percentages (20% and 5%).
+- 🌗 **Dark / Light / System Theme** — Full Material 3 theming support that respects system preferences or user choice.
+- 📋 **Export to JSON** — One-tap backup and export of credit snapshots and key metadata.
+- 📱 **Multi-Platform** — Native responsive support for Android, iOS, macOS, and Web.
 
-- 🔐 **Secure API Keys** — Keys are stored in the platform's native Keychain/Keystore
-  via `flutter_secure_storage`; they are never written to disk in plain text.
-- 💳 **Credit Monitoring** — See your OpenRouter account balance and usage in real time.
-- 🔑 **Two Key Types** — Works with both *Inference* keys (per-key limits & usage) and
-  *Management* keys (account-wide balance), switchable from Settings.
-- 📊 **Usage Breakdown** — Today, this week, this month, and total usage are shown as
-  cards, each with a progress bar against the key's limit.
-- 📈 **Burn Rate Estimate** — A "≈ N days left at current rate" hint, computed from your
-  daily usage, so you know when your credits will run out.
-- 🔔 **Low-Balance Alert** — A coloured banner appears when your remaining credits fall
-  below 20% (orange) or 5% (red).
-- 🎨 **Smart Balance Colour** — The main balance turns green → orange → red as it runs
-  low, so the status is obvious at a glance.
-- 🌗 **Dark / Light / System Theme** — Pick a theme in Settings; the choice is
-  remembered across restarts.
-- 🕐 **Friendly "Time Ago"** — The last-updated line shows a readable "2 min ago" style
-  label instead of a raw clock time.
-- 🔄 **Manual Refresh** — Refresh with the toolbar button or the pull-to-refresh gesture.
-- 📋 **Copy & Export** — Tap the balance to copy it, or export a JSON snapshot of your
-  credits and usage from Settings → Data.
-- 🔒 **Safe Logout** — Deleting your stored key asks for confirmation first.
-- 🎨 **Modern, Adaptive UI** — Material 3 design with responsive spacing that scales
-  across desktop and mobile.
+## 🗺️ Roadmap
 
-## 🎨 Screenshots
+- [x] Secure API key storage (Keychain / Keystore)
+- [x] Credit balance & usage monitoring
+- [x] Dark / Light / System theme modes
+- [x] Low-balance warning alerts
+- [x] Burn-rate estimation
+- [x] JSON data export
+- [ ] Multiple API key profiles support
+- [ ] Historical usage graphs & analytics
+- [ ] Desktop system tray / menu bar quick indicator
+- [ ] Push notifications for critical credit thresholds
 
-### Home Screen — Credits & Usage
-![Home Screen](assets/images/credo-preview.png)
+## 🛠️ Technical Decisions
 
-> The app provides a clean, intuitive interface for managing your OpenRouter API keys and monitoring account credits in real-time.
+Every technical choice in Credo was made with simplicity, maintainability, and security in mind:
 
-## 🛠️ Tech Stack
+- **Provider (State Management)**: Chosen over BLoC or Riverpod because Credo is a focused, single-purpose application. Provider provides a lightweight, idiomatic `ChangeNotifier` solution without introducing unnecessary boilerplate or complex event streams.
+- **`flutter_secure_storage`**: API keys are high-value credentials. Storing them in standard `SharedPreferences` or local JSON files is insecure. `flutter_secure_storage` delegates storage directly to platform-native secure vaults (iOS/macOS Keychain, Android Keystore).
+- **`http` over `dio`**: Credo only communicates with two simple REST endpoints (`/api/v1/key` and `/api/v1/credits`). Using standard `http` keeps the dependency footprint minimal without needing Dio's complex interceptor architecture.
+- **Material Design 3**: Provides modern UI components, adaptive layout scaling, and dynamic dark/light color palette integration out of the box.
+- **Directory Structure (`models/` - `services/` - `screens/` - `providers/` - `utils/`)**: Enforces clean separation of concerns. Data models, network/storage services, UI screens, and state logic remain strictly decoupled for readability and testability.
 
-- **Flutter & Dart** (3.13.2+)
-- **State Management**: [Provider](https://pub.dev/packages/provider) v6.1.1 — a single
-  `ChangeNotifier` (`AppProvider`) drives the whole app
-- **Secure Storage**: [`flutter_secure_storage`](https://pub.dev/packages/flutter_secure_storage)
-  — platform Keychain/Keystore for the API key and the theme choice
-- **Networking**: [`http`](https://pub.dev/packages/http) — REST calls to OpenRouter
-  (`/api/v1/key` and `/api/v1/credits`)
-- **Links**: [`url_launcher`](https://pub.dev/packages/url_launcher) — opens the
-  OpenRouter keys page in a browser
-- **Formatting**: [`intl`](https://pub.dev/packages/intl) — currency formatting
-- **App Icons**: [`flutter_launcher_icons`](https://pub.dev/packages/flutter_launcher_icons)
-  — generates the platform launcher icons
+## 🏗️ Architecture
 
-## 🚀 How to Run
-
-### Prerequisites
-
-- Flutter SDK (3.13.2+)
-- Dart 3.x
-- Platform-specific requirements:
-  - **Android**: Android SDK 21+
-  - **iOS**: Xcode 14+
-  - **macOS**: Xcode 14+
-  - **Web**: Any modern browser
-  - **Windows**: Windows 10+ (⚠️ Untested)
-  - **Linux**: (⚠️ Untested)
-
-### Installation
-
-```bash
-# Get dependencies
-flutter pub get
-
-# Run the app
-flutter run
-```
-
-### Build for Platforms
-
-```bash
-# Android
-flutter build apk
-
-# iOS
-flutter build ios
-
-# macOS
-flutter build macos
-
-# Windows
-flutter build windows
-
-# Linux
-flutter build linux
-
-# Web
-flutter build web
-```
-
-## 📂 Project Structure
+Credo follows a clean layered architecture using the Provider pattern:
 
 ```
 lib/
-├── main.dart                       # Entry point: providers + light/dark theme
-├── models/
-│   ├── credits_info.dart           # Account credit totals (management key)
-│   ├── key_info.dart               # Per-key limits & usage (inference key)
-│   └── key_type.dart               # Inference / Management key enum
-├── providers/
-│   └── app_provider.dart           # Single ChangeNotifier holding all app state
-├── screens/
-│   ├── home_screen.dart            # Balance, usage cards, alerts, refresh
-│   ├── key_setup_screen.dart       # First-run API key entry & connection test
-│   └── settings_screen.dart        # Key type, theme, JSON export, logout
-├── services/
-│   ├── openrouter_service.dart     # OpenRouter REST API calls
-│   └── secure_storage_service.dart # Keychain/Keystore read & write
-└── utils/
-    ├── api_key_mask.dart           # Masks the API key for display
-    ├── export_helper.dart          # Builds the JSON export snapshot
-    └── url_helper.dart             # Launches external OpenRouter links
-assets/
-├── images/                         # App logo & icon (SVG + PNG variants)
-└── icons/                          # Platform icons used in this README
+├── models/     → Data models (CreditsInfo, KeyInfo, KeyType)
+├── providers/  → State management & business logic (AppProvider)
+├── screens/    → UI presentation layer (Home, KeySetup, Settings)
+├── services/   → External APIs & native storage (OpenRouter, SecureStorage)
+└── utils/      → Pure helper functions (mask, url, export)
 ```
 
-## 📱 Supported Platforms
+## 📱 Platform Support
 
 | Platform | Status | Notes |
 |---|:---:|---|
-| <img src="assets/icons/android-icon.png" width="50" height="50" style="display:block;margin:auto;" alt="Android"> | ✅ Tested | Working on Android phones & tablets |
-| <img src="assets/icons/ios-icon.png" width="50" height="50" style="display:block;margin:auto;" alt="iOS"> | ✅ Tested | Working on iPhone & iPad |
-| <img src="assets/icons/web-icon.png" width="50" height="50" style="display:block;margin:auto;" alt="Web"> | ✅ Tested | Chrome, Firefox, Safari compatible |
-| <img src="assets/icons/macos-icon.png" width="50" height="50" style="display:block;margin:auto;" alt="macOS"> | ✅ Tested | Working on Apple Silicon |
-| <img src="assets/icons/windows-icon.png" width="50" height="50" style="display:block;margin:auto;" alt="Windows"> | ❌ Not tested | Build available |
-| <img src="assets/icons/linux-icon.png" width="50" height="50" style="display:block;margin:auto;" alt="Linux"> | ❌ Not tested | Build available |
+| 🤖 Android | ✅ Tested | Working on phones & tablets |
+| 🍎 iOS | ✅ Tested | Built with Xcode 14+ |
+| 🌐 Web | ✅ Tested | Chrome, Firefox, Safari compatible |
+| 🖥️ macOS | ✅ Tested | Apple Silicon |
+| 🪟 Windows | ⚠️ Untested | Build available |
+| 🐧 Linux | ⚠️ Untested | Build available |
 
-> Android, iOS, Web, and macOS tested. Windows & Linux builds available but untested.
+## 🚀 Installation & Running
 
-## 📝 License
+### 🔑 Getting Your API Key
 
-MIT License. See [LICENSE](LICENSE) for details.
+1. **Sign up / Log in**: Go to [OpenRouter](https://openrouter.ai/).
+2. **Navigate to API Keys**: Access your account's [API Keys settings](https://openrouter.ai/keys).
+3. **Create a Key**: Generate a new API key (choose either an *Inference* or *Management* key).
+4. **Copy the Key**: Copy the generated key string and paste it into Credo when prompted during setup.
 
-**Copyright © 2026 moradzadeh67**
+### Prerequisites
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (v3.13+)
+- Dart SDK (v3.x)
 
-This project is open-source and free to use, modify, and distribute under the MIT License terms.
+### Getting Started
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/moradzadeh67/credo.git
+   cd credo
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   flutter pub get
+   ```
+
+3. **Run the application**:
+   ```bash
+   # Run on connected device or default desktop
+   flutter run
+   ```
+
+### Building
+
+```bash
+# Build Android APK
+flutter build apk --release
+
+# Build macOS Desktop app
+flutter build macos --release
+
+# Build Web distribution
+flutter build web --release
+```
+
+## 💻 Development Environment
+
+This project is actively developed and tested using:
+- **OS**: macOS (Apple Silicon)
+- **IDE**: VS Code / Android Studio
+- **iOS/macOS Build Toolchain**: Xcode 14+
+- **Flutter Framework**: Flutter 3.13+
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+Copyright © 2026 moradzadeh67
