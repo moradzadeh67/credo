@@ -1,12 +1,18 @@
-# Credo
+# 💳 Credo
+
+![Credo Banner](assets/branding/readme-banner.png)
 
 Credo is a lightweight, open-source Flutter app for managing OpenRouter API keys and monitoring your credit balance — securely and in real time. Built with Material Design 3 and platform-native secure storage. Available on Android, iOS, macOS, and Web.
 
 [![Latest Release](https://img.shields.io/github/v/release/moradzadeh67/credo?style=flat-square&color=green)](https://github.com/moradzadeh67/credo/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20macOS%20%7C%20Web-blue?style=flat-square)]()
+[![Flutter](https://img.shields.io/badge/Flutter-3.13+-02569B?style=flat-square&logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?style=flat-square&logo=dart&logoColor=white)](https://dart.dev)
 
 ### 📥 [Download Latest APK](https://github.com/moradzadeh67/credo/releases/latest)
+
+**Contents:** [Why I Built This](#-why-i-built-this) · [Screenshots](#-screenshots) · [Features](#-features) · [Roadmap](#-roadmap) · [Technical Decisions](#-technical-decisions) · [Architecture](#-architecture) · [Testing](#-testing) · [Platform Support](#-platform-support) · [Installation & Running](#-installation--running) · [Development Environment](#-development-environment) · [Contributing](#-contributing) · [Credits & Attribution](#-credits--attribution) · [License](#-license)
 
 ## 💡 Why I Built This
 
@@ -77,15 +83,15 @@ Credo follows a clean layered architecture using the Provider pattern.
 
 ### Project Structure
 
-![Project Structure](assets/diagrams/project-structure.png)
+<img src="assets/diagrams/project-structure.png" alt="Project Structure" width="600">
 
 ### Architecture Layers
 
-![Architecture Layers](assets/diagrams/architecture-layers.png)
+<img src="assets/diagrams/architecture-layers.png" alt="Architecture Layers" width="800">
 
 ### Data Flow
 
-![Data Flow Diagram](assets/diagrams/data-flow-diagram.png)
+<img src="assets/diagrams/data-flow-diagram.png" alt="Data Flow Diagram" width="600">
 
 ### Layer Overview
 
@@ -107,6 +113,18 @@ lib/
 4. **Services** — `services/` handles API calls and secure storage
 5. **Models** — `models/` represents typed data
 6. **Update Cycle** — State changes trigger `notifyListeners()` → UI rebuilds
+
+## ✅ Testing
+
+To ensure code quality and maintain robustness, run the static analyzer and test suite:
+
+```bash
+# Static analysis check
+flutter analyze
+
+# Run unit and widget tests
+flutter test
+```
 
 ## 📱 Platform Support
 
@@ -176,8 +194,12 @@ This project is actively developed and tested using:
 
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
 
+## 🙏 Credits & Attribution
+
+Built with ❤️ using [Flutter](https://flutter.dev), powered by [OpenRouter API](https://openrouter.ai/), and supported by open-source packages including [Provider](https://pub.dev/packages/provider) and [flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage).
+
 ## 📄 License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
-Copyright © 2026 moradzadeh67
+Copyright © 2026 Mohammadreza Moradzadeh ([@moradzadeh67](https://github.com/moradzadeh67))
