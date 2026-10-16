@@ -406,6 +406,7 @@ Built with ❤️ using [Flutter](https://flutter.dev), powered by the [OpenRout
 ## 🤝 Contributing
 
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
+For security issues, do **not** open a public issue — see [SECURITY.md](SECURITY.md). Release history lives in [CHANGELOG.md](CHANGELOG.md).
 
 ## 📄 License
 
