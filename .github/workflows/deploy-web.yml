@@ -40,6 +40,8 @@ jobs:
           cp landing/index.html _site/index.html
           cp landing/robots.txt _site/robots.txt
           cp landing/sitemap.xml _site/sitemap.xml
+          # Any other root files (e.g. Google Search Console verification files)
+          find landing -maxdepth 1 -type f ! -name 'index.html' ! -name 'robots.txt' ! -name 'sitemap.xml' -exec cp {} _site/ \;
 
       - uses: actions/upload-pages-artifact@v3
         with:
