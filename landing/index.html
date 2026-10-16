@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credo — OpenRouter API key &amp; credit manager for Android, iOS, macOS and Web</title>
+<meta name="description" content="Credo is a free, open-source Flutter app to manage OpenRouter API keys and monitor your credit balance in real time. Keys stay encrypted in the system Keychain or Android Keystore. Available for Android, iOS, macOS and the web.">
+<meta name="keywords" content="Credo, OpenRouter, API key manager, credit balance, usage monitor, burn rate, Flutter, open source, Keychain, Android Keystore, macOS, iOS, Android, web, privacy-first">
+<meta name="author" content="Mohammadreza Moradzadeh">
+<link rel="canonical" href="https://moradzadeh67.github.io/credo/">
+<link rel="icon" href="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/images/credo-icon-128.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Credo — OpenRouter API key &amp; credit manager">
+<meta property="og:description" content="Track OpenRouter credits and usage in real time. Secure key storage, alerts, burn-rate estimation. Free and open source.">
+<meta property="og:url" content="https://moradzadeh67.github.io/credo/">
+<meta property="og:image" content="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/branding/readme-banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Credo — OpenRouter API key &amp; credit manager">
+<meta name="twitter:description" content="Real-time OpenRouter credit monitoring with encrypted local key storage. Free and open source.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/branding/readme-banner.png">
+
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+         background: #eef0f6; color: #1a1a22; }
+  a { color: #4656a8; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 22px 72px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 6px; }
+  header img { width: 72px; height: 72px; border-radius: 18px; }
+  h1 { font-size: 40px; margin: 0; letter-spacing: -0.5px; }
+  .tagline { font-size: 19px; color: #4a4a5a; margin: 4px 0 26px; }
+  h2 { font-size: 24px; margin: 44px 0 12px; }
+  ul { padding-left: 22px; }
+  li { margin: 6px 0; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0; }
+  .btn { display: inline-block; padding: 12px 20px; border-radius: 999px; background: #6373bf; color: #fff;
+         text-decoration: none; font-weight: 600; }
+  .btn.alt { background: transparent; border: 1px solid #6373bf; color: #4656a8; }
+  pre { background: #ffffff; border: 1px solid #dfe2ec; padding: 16px; border-radius: 12px; overflow-x: auto; }
+  code { background: #ffffff; border: 1px solid #e3e5ee; padding: 2px 6px; border-radius: 6px; font-size: 14px; }
+  pre code { border: 0; background: none; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .shots img { width: 100%; border-radius: 12px; border: 1px solid #dfe2ec; background: #fff; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid #dfe2ec; color: #5a5a6c; font-size: 14px; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #14151c; color: #e8e9f2; }
+    a { color: #9fb0ff; }
+    .tagline { color: #a9abbb; }
+    .btn { background: #6373bf; }
+    .btn.alt { border-color: #6373bf; color: #cfd8ff; }
+    pre, code { background: #1d1f2a; border-color: #2b2e3d; }
+    .shots img { border-color: #2b2e3d; }
+    footer { border-color: #2b2e3d; color: #a2a4b5; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img src="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/images/credo-icon-256.png" alt="Credo app icon">
+    <div>
+      <h1>Credo</h1>
+      <p class="tagline">OpenRouter API key &amp; credit manager — Android, iOS, macOS and Web</p>
+    </div>
+  </header>
+
+  <p>
+    <strong>Credo</strong> is a free, open-source utility for people who build with
+    <a href="https://openrouter.ai/">OpenRouter</a>. Instead of opening the web dashboard to check your
+    remaining credits, Credo shows the balance, daily / weekly / monthly usage and an estimated
+    burn rate right on your desktop or phone. Your API key never touches a third-party server: it stays
+    encrypted in the <strong>system Keychain</strong> (iOS/macOS) or the <strong>Android Keystore</strong>.
+  </p>
+
+  <div class="btns">
+    <a class="btn" href="https://github.com/moradzadeh67/credo/releases/latest">Download the Android APK</a>
+    <a class="btn alt" href="app/">Open the web app</a>
+    <a class="btn alt" href="https://github.com/moradzadeh67/credo">Source code on GitHub</a>
+  </div>
+
+  <h2>Highlights</h2>
+  <ul>
+    <li><strong>Secure key storage</strong> — encrypted with platform-native vaults (Keychain / Android Keystore); no servers, no telemetry.</li>
+    <li><strong>Real-time credit monitoring</strong> — remaining credits and total balance at a glance.</li>
+    <li><strong>Usage breakdown</strong> — daily, weekly, monthly and all-time API usage.</li>
+    <li><strong>Burn-rate estimation</strong> — estimated days of credit left at your current pace.</li>
+    <li><strong>Low-balance alerts</strong> — warning banners at 20% and 5% of your balance.</li>
+    <li><strong>Material 3 theming</strong> — dark, light or follow the system.</li>
+    <li><strong>JSON export</strong> — one-tap backup of credit snapshots and key metadata.</li>
+    <li><strong>Four platforms</strong> — Android, iOS, macOS and the web from one Flutter codebase.</li>
+  </ul>
+
+  <h2>Screenshots</h2>
+  <div class="shots">
+    <img src="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/screenshots/macos/home_light.png" alt="Credo on macOS showing the credit balance">
+    <img src="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/screenshots/macos/home_dark.png" alt="Credo dark mode">
+    <img src="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/screenshots/android/home_light.png" alt="Credo on Android">
+    <img src="https://raw.githubusercontent.com/moradzadeh67/credo/master/assets/screenshots/web/home_light.png" alt="Credo in the browser">
+  </div>
+
+  <h2>Build from source</h2>
+  <pre><code>git clone https://github.com/moradzadeh67/credo.git
+cd credo
+flutter pub get
+flutter run -d macos</code></pre>
+  <p>
+    Requirements: Flutter 3.47.2, Dart 3.13.2, Android SDK 24+ for Android, Xcode for the Apple targets.
+    You also need an <a href="https://openrouter.ai/keys">OpenRouter API key</a> — open the app and paste it in the
+    setup screen. Full instructions are in the
+    <a href="https://github.com/moradzadeh67/credo#readme">README</a>.
+  </p>
+
+  <h2>Privacy in one line</h2>
+  <p>
+    Credo talks only to the OpenRouter API you configure. Your key is stored on your own device and never
+    sent anywhere else. See
+    <a href="https://github.com/moradzadeh67/credo/blob/master/docs/PRIVACY.md">docs/PRIVACY.md</a>.
+  </p>
+
+  <footer>
+    Credo is released under the <a href="https://github.com/moradzadeh67/credo/blob/master/LICENSE">MIT License</a>.
+    © 2026 Mohammadreza Moradzadeh.
+  </footer>
+
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Credo",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Android, iOS, macOS, Web",
+  "description": "Free, open-source Flutter app to manage OpenRouter API keys and monitor credit balance in real time, with platform-native encrypted key storage.",
+  "url": "https://moradzadeh67.github.io/credo/",
+  "downloadUrl": "https://github.com/moradzadeh67/credo/releases/latest",
+  "codeRepository": "https://github.com/moradzadeh67/credo",
+  "license": "https://opensource.org/licenses/MIT",
+  "author": { "@type": "Person", "name": "Mohammadreza Moradzadeh", "url": "https://github.com/moradzadeh67" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</body>
+</html>

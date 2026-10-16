@@ -1,11 +1,11 @@
 {
-    "name": "credo",
-    "short_name": "credo",
+    "name": "Credo",
+    "short_name": "Credo",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#6373BF",
+    "theme_color": "#6373BF",
+    "description": "Manage OpenRouter API keys and monitor your credit balance securely.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
